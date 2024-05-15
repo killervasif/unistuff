@@ -1,70 +1,45 @@
 ﻿using System.Globalization;
 using System.Runtime.InteropServices;
+using System;
+using System.Numerics;
+using static Program;
+using static csqaralama.Program;
 
 namespace csqaralama;
 
+
 partial class Program
 {
-
-    public class Teacher
+    
+    static void Main(string[] args)
     {
-        private string _name;
-        private double _value;
-        private short _telebeCount;
+        int n = 0;
 
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
+        int[,] M = new int[5,5];
+        int sum = 0;
+        for (int i = 0; i < 5; i++) {
+            int rowSum = 0;
+            for (int j = 0; j < 5; j++) {
+                M[i, j] = Random.Shared.Next(1, 10);
+                Console.Write(M[i, j]+"\t");
+                rowSum += M[i, j];
+               }
+
+            Console.WriteLine();
+            if (rowSum > sum)
+            {
+                sum = rowSum;
+                n = i;
+            }
         }
-
-        public double Value
-        {
-            get { return _value; }
-            set { _value = value; }
+        Console.WriteLine();
+        for(int i = 0;i < 5;i++) {
+            Console.Write(M[n,i]+"\t");
         }
+        Console.WriteLine(sum);
 
-        public short TelebeCount
-        {
-            get { return _telebeCount; }
-            set { _telebeCount = value; }
-        }
 
-        public Teacher(string name, double value, short telebeCount)
-        {
-            Name = name;
-            Value = value;
-            TelebeCount = telebeCount;
-        }
-
-        public double Salary() {
-            return _value * _telebeCount;
-        }
-
-        public override string ToString()
-        {
-            return $"{Name}:\t ${Value} * {TelebeCount} = {Salary()}";
-        }
-    }
-
-    static int FindSameName(string name, Teacher[] teachers)
-    {
-        int x = 0;
-        foreach (Teacher t in teachers) {if (t.Name == name) x++;}
-        return x;
-    }
-
-    static void Main()
-    {
-        Teacher[] teachers = {new("Vasif", 2.32, 12), new("Vasif", 2.32, 32), new("Revan", 32.3, 68), new("Cavad", 343.23, 55)};
-        double x = 0;
-        foreach (var teacher in teachers) { x += teacher.Salary(); }
-        foreach (var teacher in teachers) { Console.WriteLine(teacher); }
-        Console.WriteLine($"Total salary {x}");
-
-        Console.WriteLine(FindSameName("Vasif", teachers));
 
     }
-
-
 }
+
